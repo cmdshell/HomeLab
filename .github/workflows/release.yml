@@ -23,7 +23,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set variables
         run: |
@@ -36,6 +36,7 @@ jobs:
           cd ./routeros/bgp
           mkdir -p publish
           cp -fpPR ./output/*.txt ./publish
+          rm -rf ./output/
 
       - name: Git push assets to "release" branch
         run: |
@@ -63,5 +64,4 @@ jobs:
       - name: Remove all tmp files
         run: |
           rm -rf ./routeros/bgp/publish
-          rm -rf ./routeros/bgp/output
 

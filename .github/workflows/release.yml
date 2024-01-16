@@ -33,7 +33,7 @@ jobs:
 
       - name: Move files to publish directory
         run: |
-          mkdir -p ./publish
+          mkdir -p publish
           cd ./routeros/bgp
           cp -fpPR ./output/*.txt ./publish
 

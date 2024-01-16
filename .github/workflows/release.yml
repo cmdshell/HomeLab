@@ -33,8 +33,8 @@ jobs:
 
       - name: Move files to publish directory
         run: |
-          mkdir -p publish
           cd ./routeros/bgp
+          mkdir -p publish
           cp -fpPR ./output/*.txt ./publish
 
       - name: Git push assets to "release" branch

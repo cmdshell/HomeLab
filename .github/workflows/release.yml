@@ -22,8 +22,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Checkout codebase
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set variables
         run: |
@@ -42,7 +43,7 @@ jobs:
           cd ./routeros/bgp/publish || exit 1
           git init
           git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.email "badegg+github-actions[bot]@users.noreply.github.com"
           git checkout -b release
           git add -A
           git commit -m "${{ env.RELEASE_NAME }}"
@@ -50,7 +51,7 @@ jobs:
           git push -f -u HomeLab release
 
       - name: Remove some files to avoid publishing to GitHub release
-        run: rm -rf ./publish/*.{gz,zip} 
+        run: rm -rf ./routeros/bgp/publish/*.{gz,zip,py,sh,rs} 
 
       - name: Upload files to GitHub release
         uses: svenstaro/upload-release-action@v2
@@ -59,4 +60,9 @@ jobs:
           file_glob: true
           file: ./routeros/bgp/publish/*
           tag: ${{ env.TAG_NAME }}
+
+      - name: Remove all tmp files
+        run: |
+          rm -rf ./routeros/bgp/publish
+          rm -rf ./routeros/bgp/output
 

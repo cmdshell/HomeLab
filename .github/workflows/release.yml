@@ -32,9 +32,9 @@ jobs:
       - name: Move files to publish directory
         run: |
           cd ./routeros/bgp
-          mkdir -p publish/cn publish/noncn
-          cp -fpPR output/cn/*.txt publish/cn/
-          cp -fpPR output/noncn/*.txt publish/noncn/
+          mkdir -p publish
+          cp -fpPR output/cn/*.txt publish/
+          cp -fpPR output/noncn/*.txt publish/
           rm -rf output
 
       - name: Git push assets to "release" branch
@@ -51,8 +51,8 @@ jobs:
 
       - name: Remove some files to avoid publishing to GitHub release
         run: |
-          rm -rf ./routeros/bgp/publish/cn/*.{gz,zip,py,sh,rs} 
-          rm -rf ./routeros/bgp/publish/noncn/*.{gz,zip,py,sh,rs} 
+          rm -rf ./routeros/bgp/publish/*.{gz,zip,py,sh,rs} 
+          rm -rf ./routeros/bgp/publish/*.{gz,zip,py,sh,rs} 
 
       - name: Upload files to GitHub release
         uses: svenstaro/upload-release-action@v2

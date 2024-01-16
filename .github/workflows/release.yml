@@ -4,8 +4,6 @@ name: Release ASN files
 
 # Controls when the workflow will run
 on:
-  schedule:
-    - cron: "0 0 * * 4"
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
@@ -35,7 +33,7 @@ jobs:
         run: |
           cd ./routeros/bgp
           mkdir -p publish
-          cp -fpPR ./output/*.txt ./publish
+          cp -fpPR ./output ./publish
           rm -rf ./output/
 
       - name: Git push assets to "release" branch
@@ -51,7 +49,9 @@ jobs:
           git push -f -u HomeLab release
 
       - name: Remove some files to avoid publishing to GitHub release
-        run: rm -rf ./routeros/bgp/publish/*.{gz,zip,py,sh,rs} 
+        run: |
+          rm -rf ./routeros/bgp/publish/cn/*.{gz,zip,py,sh,rs} 
+          rm -rf ./routeros/bgp/publish/noncn/*.{gz,zip,py,sh,rs} 
 
       - name: Upload files to GitHub release
         uses: svenstaro/upload-release-action@v2
@@ -64,4 +64,5 @@ jobs:
       - name: Remove all tmp files
         run: |
           rm -rf ./routeros/bgp/publish
+          rm -rf ./routeros/bgp/output
 

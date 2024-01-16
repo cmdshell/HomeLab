@@ -32,11 +32,13 @@ jobs:
       - name: Move files to publish directory
         run: |
           cd ./routeros/bgp
-          mkdir -p publish/cn 
-          mkdir -p publish/noncn
-          cp -fpPR output/cn/*.txt publish/cn/*.txt
-          cp -fpPR output/noncn/*.txt publish/noncn/*.txt
-          rm -rf output
+          mkdir -p publish
+          cd publish
+          mkdir -p cn
+          mkdir -p noncn
+          cp -fpPR ../output/cn/*.txt cn/*.txt
+          cp -fpPR ../output/noncn/*.txt noncn/*.txt
+          rm -rf ../output
 
       - name: Git push assets to "release" branch
         run: |
